@@ -14,7 +14,12 @@ plugins {
     // Con nuevas dependencias ejecutar task "gradle eclipse" y refrescar el proyecto
     // Ver => https://stackoverflow.com/a/23212148/2443951
     id 'eclipse'
+    
+    // For publish to jitpack
+    id 'maven'
 }
+
+	group = 'com.github.lanyuestudio'
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
