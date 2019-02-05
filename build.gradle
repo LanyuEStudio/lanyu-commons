@@ -42,10 +42,11 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
     
+    mavenCentral()
+    
     // Dependencia de jitpack para poder importar codigo desde github
     maven { url 'https://jitpack.io' }
     
-    mavenCentral()
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
