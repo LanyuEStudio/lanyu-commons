@@ -19,7 +19,10 @@ plugins {
     id 'maven'
 }
 
-	group = 'com.github.lanyuestudio'
+group = 'com.github.lanyuestudio'
+
+sourceCompatibility = 1.8 // java 8
+targetCompatibility = 1.8
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
@@ -41,4 +44,6 @@ repositories {
     
     // Dependencia de jitpack para poder importar codigo desde github
     maven { url 'https://jitpack.io' }
+    
+    mavenCentral()
 }
