@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.esotericsoftware.jsonbeans.Json;
-
 public class GestorIdentificables {
 	@SuppressWarnings("rawtypes")
 	Map<Class, Map> mapaIdentificables = new HashMap<>();
@@ -17,7 +15,7 @@ public class GestorIdentificables {
 	@SuppressWarnings("unchecked")
 	public <K extends Comparable<K>, T extends Identificable<K>> void addIdentificable(Class<T> clase, K id, T identificable){
 		Map<K, T> mapa = getMapaIdentificables().get(clase);
-		if(mapa == null){
+		if (mapa == null) {
 			mapa = new HashMap<>();
 			getMapaIdentificables().put(clase, mapa);
 		}
@@ -49,10 +47,4 @@ public class GestorIdentificables {
 		return (T) getMapaIdentificables().get(clase).get(id);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public <K extends Comparable<K>, T extends Identificable<K>, S extends T>void cargarIdentificables(Json json, String rutaArchivo, Class<T> claseMapa, Class<S> claseEspecializacion) {
-		getMapaIdentificables().put(claseMapa, new HashMap<>());
-		
-		Identificable.cargarIdentificables(json, rutaArchivo, getMapaIdentificables().get(claseMapa), claseEspecializacion);
-	}
 }

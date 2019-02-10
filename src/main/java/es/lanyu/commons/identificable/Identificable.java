@@ -1,16 +1,9 @@
 package es.lanyu.commons.identificable;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-
-import com.esotericsoftware.jsonbeans.Json;
 
 
 /**
@@ -30,20 +23,6 @@ import com.esotericsoftware.jsonbeans.Json;
 public interface Identificable<K extends Comparable<K>> extends Comparable<Identificable<K>>{
 	
 	K getIdentificador();
-	
-	static <KI extends Comparable<KI>, T extends Identificable<KI>> void cargarIdentificables(Json json, String archivo, Map<KI, T> mapa, Class<T> clase){
-	    String text = null;
-		try (BufferedReader buffer = new BufferedReader(new FileReader(archivo))){
-			while((text = buffer.readLine()) != null){
-			    T p = json.fromJson(clase, text);
-			    mapa.put(p.getIdentificador(), p);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	static <KI extends Comparable<KI>> Comparator<Identificable<KI>> getComparator(){
 //		return new Comparator<Identificable<KI>>() {

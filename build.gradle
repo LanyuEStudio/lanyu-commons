@@ -10,6 +10,8 @@ plugins {
     // Apply the java plugin to add support for Java
     id 'java'
     
+    //id 'java-library'
+    
     // Aplicar plugin de Eclipse para el Asistente de Contenido de dependencias
     // Con nuevas dependencias ejecutar task "gradle eclipse" y refrescar el proyecto
     // Ver => https://stackoverflow.com/a/23212148/2443951
@@ -34,6 +36,10 @@ dependencies {
     // Usar libreria desde repositorio de github utilizando jitpack
     // Ver => https://jitpack.io/
     //implementation 'com.github.esotericsoftware:jsonbeans:master'
+    
+    //api 'com.github.esotericsoftware:jsonbeans:master'
+    
+    //compile 'com.github.esotericsoftware:jsonbeans:master'
 }
 
 // In this section you declare where to find the dependencies of your project

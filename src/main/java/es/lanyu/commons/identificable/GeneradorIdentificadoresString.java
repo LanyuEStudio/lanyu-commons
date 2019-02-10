@@ -1,9 +1,17 @@
 package es.lanyu.commons.identificable;
 
-public class GeneradorIdentificadoresString extends GeneradorIdentificadores<String>{
+public class GeneradorIdentificadoresString<T extends Identificable<String>> extends GeneradorIdentificadores<T, String>{
 
-	private String formatoID = "#%d";
+	private String formatoID;
 	private int ultimoNumeroGenerado;
+	
+	public GeneradorIdentificadoresString(){
+		this("#%d");
+	}
+	
+	public GeneradorIdentificadoresString(String formatoIds) {
+		formatoID = formatoIds;
+	}
 	
 	public String generarID() {
 		String id; 
@@ -15,7 +23,7 @@ public class GeneradorIdentificadoresString extends GeneradorIdentificadores<Str
 		return id;
 	}
 	
-	public void registrarIdentificable(Identificable<String> identificable){
+	public void registrarIdentificable(T identificable){
 		getMapaIdentificadores().put(identificable.getIdentificador(), identificable);
 	}
 	
