@@ -21,7 +21,8 @@ public class Util {
 	 * @param informe Cadena a escribir
 	 * @param fichero Ruta del fichero
 	 * @param charSet Codificacion a usar
-	 * @throws IOException
+	 * @throws IOException Produced by failed or interrupted I/O operations
+	 * @see Util#guardarInformeEnFichero(String texto, Writer escritor)
 	 */
 	public static void guardarInformeEnFichero(String informe, String fichero, String charSet) throws IOException{
 		guardarInformeEnFichero(informe, new OutputStreamWriter(new FileOutputStream(fichero), charSet));
@@ -29,40 +30,58 @@ public class Util {
 	/**Vuelca una cadena en un fichero con la codificacion UTF-8
 	 * @param informe Cadena a escribir
 	 * @param fichero Ruta del fichero
-	 * @throws IOException
+	 * @throws IOException Produced by failed or interrupted I/O operations
+	 * @see Util#guardarInformeEnFichero(String, String, String)
 	 */
 	public static void guardarInformeEnFichero(String informe, String fichero) throws IOException{
 		guardarInformeEnFichero(informe, fichero, "UTF-8");
 	}
-	/**Vuelca una cadena en un fichero con la codificacion UTF-8
+	/**Vuelca una cadena en el {@link File} fichero
 	 * @param informe Cadena a escribir
 	 * @param fichero File donde escribir la cadena
-	 * @throws IOException
+	 * @throws IOException Produced by failed or interrupted I/O operations
+	 * @see Util#guardarInformeEnFichero(String texto, Writer escritor)
 	 */
 	public static void guardarInformeEnFichero(String informe, File fichero) throws IOException{
 		guardarInformeEnFichero(informe, new FileWriter(fichero));
 	}
-	//Es mas eficiente escribir rodeando el Writer con un BufferedWriter
-	//VER: https://docs.oracle.com/javase/8/docs/api/java/io/BufferedWriter.html
+	/**Vuelca una cadena en un fichero con la codificacion UTF-8 rodeandolo de un {@link BufferedWriter}
+	 * (es mas eficiente, ver <a href="https://docs.oracle.com/javase/8/docs/api/java/io/BufferedWriter.html">
+	 * documentacion</a>
+	 * @param texto Cadena a escribir
+	 * @param escritor {@link Writer} para encapsular
+	 * @throws IOException Produced by failed or interrupted I/O operations
+	 */
 	private static void guardarInformeEnFichero(String texto, Writer escritor) throws IOException{
 		BufferedWriter bWriter = new BufferedWriter(escritor);
 		bWriter.write(texto);
 //		bWriter.flush();
 		bWriter.close();
 	}
-	
-	//TODO Añadir cadena a archivo
+
+	//TODO Escribir cadena al final del archivo
 	public static void agregarTextoEnFinalArchivo (String texto, Writer escritor){
 		System.out.println("Hay que implementarlo");
 	}
-	
+
+	/**Copia un archivo de la ruta {@code origen} a la ruta {@code destino}
+	 * @param origen ruta hasta el archivo a copiar
+	 * @param destino ruta donde hacer la copia
+	 * @throws IOException Produced by failed or interrupted I/O operations
+	 */
 	public static void copiarArchivo(String origen, String destino) throws IOException{
 		Files.copy(FileSystems.getDefault().getPath(origen),
 	    		FileSystems.getDefault().getPath(destino),
 	    		StandardCopyOption.REPLACE_EXISTING);
 	}
-	
-	//Codigo conseguido de http://stackoverflow.com/questions/453018/number-of-lines-in-a-file-in-java
+
+	/**Cuenta las lineas de un fichero en la ruta {@code fichero}. Codigo copiado de
+	 * <a href="http://stackoverflow.com/questions/453018/number-of-lines-in-a-file-in-java">
+	 * stackoverflow</a>
+	 * @param fichero ruta del fichero
+	 * @return numero de lineas que contiene el fichero
+	 * @throws IOException Produced by failed or interrupted I/O operations
+	 */
 	public static long contarLineas(String fichero) throws IOException {
 		long lineas = 0;
 		

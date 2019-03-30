@@ -1,24 +1,12 @@
 package es.lanyu.commons.identificable;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+/**Interfaz para generador de claves de tipo K (normalmente para generacion de ids de {@link Identificable}).
+ * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
+ * @version 1.0
+ * @since 1.0
+ */
+public interface GeneradorIdentificadores<K> {
 
-public abstract class GeneradorIdentificadores<I extends Identificable<K>, K extends Comparable<K>> {
+	K generarID();
 
-	private Map<K, I> mapaIdentificadores = new HashMap<>();
-	
-	public abstract K generarID();
-	
-	protected Map<K, I> getMapaIdentificadores() {
-		return mapaIdentificadores;
-	}
-	
-	public Identificable<K> getIdentificable(K id){
-		return getMapaIdentificadores().get(id);
-	}
-	
-	public Collection<I> getIdentificablesRegistrados() {
-		return getMapaIdentificadores().values();
-	}
 }
