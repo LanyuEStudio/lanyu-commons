@@ -1,5 +1,12 @@
 package es.lanyu.commons.math;
 
+/**Interfaz para representar vectores en dos dimensiones.
+ * Contiene metodos para realizar operaciones de suma y escalado de vectores alterando el original
+ * o proporcionado una copia del resultado. Tambien permite calcular la pendiente y modulo del vector.
+ * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
+ * @version 1.0
+ * @since 1.0
+ */
 public interface Vector2d {
 
 	float getX();

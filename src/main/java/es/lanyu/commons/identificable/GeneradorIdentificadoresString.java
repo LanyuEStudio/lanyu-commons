@@ -20,10 +20,12 @@ public class GeneradorIdentificadoresString implements GeneradorIdentificadores<
 		formatoID = formatoIds;
 	}
 
-	public String generarID() {
+	public String generarId() {
 		return String.format(formatoID, ultimoNumeroGenerado++);
 	}
 
+	/**Como genera autonumericos, este metodo sirve para reiniciar de nuevo a {@code 1}.
+	 */
 	protected void reiniciarNumeros(){
 		ultimoNumeroGenerado = 1;
 	}

@@ -17,6 +17,20 @@ import java.util.List;
  */
 public interface Identificable<K extends Comparable<K>> extends Comparable<Identificable<K>>{
 	
+	/**Devuelve el identificador de tipo K que identifica univocamente al objeto en su tipo.
+	 * Por defecto se devolvera el valor del campo marcado con la anotacion {@link Identificador},
+	 * si la implementacion no usa esta anotacion se devolvera el campo con nombre {@code "id"}.
+	 * Para mejorar el rendimiento se recomienda al menos implementarlo con una "lazy-loading"
+	 * para no buscar el {@link Field} en sucesivas invocaciones como se hace en {@link IdentificableString#getIdentificador()}:
+	 * <pre>&#64;Override
+	 * public String getIdentificador() {
+	 *   if(id == null)
+	 *     setIdentificador(Identificable.super.getIdentificador());
+	 *   return id;
+	 * }</pre>
+	 * No obstante se recomienda sobrescribir el metodo para poder realizar validaciones.
+	 * @return El identificador de tipo K correspondiente al objeto.
+	 */
 	@SuppressWarnings("unchecked")
 	default K getIdentificador(){
 		K id = null;
@@ -38,7 +52,12 @@ public interface Identificable<K extends Comparable<K>> extends Comparable<Ident
 		return id;
 	}
 	
-	static <KI extends Comparable<KI>> Comparator<Identificable<KI>> getComparator(){
+	/**Devuelve el {@link Comparator} para ordenar los {@code Identificable<K>} por el orden natural
+	 * del tipo {@code K}
+	 * @param <K> Tipo del identificador usado por el {@code Identificable}
+	 * @return {@code Comparator} segun la descripcion
+	 */
+	static <K extends Comparable<K>> Comparator<Identificable<K>> getComparator(){
 //		return new Comparator<Identificable<KI>>() {
 //			
 //			@Override
@@ -49,19 +68,34 @@ public interface Identificable<K extends Comparable<K>> extends Comparable<Ident
 		return Comparator.naturalOrder();// Java 8
 	}
 	
-	static <KI extends Comparable<KI>, T extends Identificable<KI>>
-		T getIdentificablePorIndiceOrdenado(int indice, Collection<T> listaIdentificables) {
+	/**Devuelve el {@link Identificable} que se encuentra en el {@code indice} cuando los
+	 * {@code identificables} estan ordenados por su orden natural (ver {@link Identificable#getComparator()}
+	 * @param <K> Tipo del identificador
+	 * @param <T> Tipo del {@code Identificable<K>} 
+	 * @param indice Posicion que ocupa en {@code identificables} ordenados
+	 * @param identificables {@link Collection} de identificables. No se requiere pasarla ordenada.
+	 * @return {@code Identificable} que ocupa la posicion {@code indice}
+	 */
+	static <K extends Comparable<K>, T extends Identificable<K>>
+		T getIdentificablePorIndiceOrdenado(int indice, Collection<T> identificables) {
 		
-		List<T> identificablesOrdenados = new ArrayList<>(listaIdentificables);
+		List<T> identificablesOrdenados = new ArrayList<>(identificables);
 		identificablesOrdenados.sort(getComparator());
 		
 		return identificablesOrdenados.get(indice);
 	}
 	
 	
-	static <KI extends Comparable<KI>, T extends Identificable<KI>>
-		T getIdentificablePorId(KI id, Collection<T> listaIdentificables) {
-		return listaIdentificables.stream()
+	/**Devuelve un {@link Identificable} con el {@code id} dentro de {@code identificables}
+	 * @param <K> Tipo del identificador
+	 * @param <T> Tipo del {@code Identificable<K>} 
+	 * @param id Identificador del {@code Identificable} buscado
+	 * @param identificables {@link Collection} de identificables donde buscar
+	 * @return El {@code Identificable} buscado o {@code null} si no existe
+	 */
+	static <K extends Comparable<K>, T extends Identificable<K>>
+		T getIdentificablePorId(K id, Collection<T> identificables) {
+		return identificables.stream()
 									.filter(i -> i.getIdentificador().equals(id))
 									.findAny()
 									.orElse(null);
@@ -73,7 +107,7 @@ public interface Identificable<K extends Comparable<K>> extends Comparable<Ident
 	}
 	
 	
-	/**Metodo auxiliar para implementar por defecto hashcode en la interface
+	/**Metodo auxiliar para implementar por defecto {@link Object#hashCode()} en la interface
 	 * @return hashCode para el identificable solo teniendo en cuenta el identificador
 	 */
 	default int getHashCode() {
@@ -84,9 +118,9 @@ public interface Identificable<K extends Comparable<K>> extends Comparable<Ident
 		return result;
 	}
 	
-	/**Metodo auxiliar para implementar por defecto equals en la interface
-	 * @param obj Objecto con el que comparar la igualdad
-	 * @return true si los dos identificadore son iguales
+	/**Metodo auxiliar para implementar por defecto {@link Object#equals(Object)} en la interface
+	 * @param obj Objeto contra el que compararse
+	 * @return {@code true} si los dos identificadore son iguales
 	 */
 	default boolean isEquals(Object obj) {
 		if (this == obj)
@@ -109,7 +143,7 @@ public interface Identificable<K extends Comparable<K>> extends Comparable<Ident
 	static class IdentificadorException extends Exception {
 		public IdentificadorException(){
 			super("Para implementar la interfaz Identificable deben implementarse"
-			+ " el método getIdentificador(), utilizar la anotacion @Identificador"
+			+ " el mÃ©todo getIdentificador(), utilizar la anotacion @Identificador"
 			+ " o tener campo de tipo compatible con la clave y de nombre 'id'.");
 		}
 	}

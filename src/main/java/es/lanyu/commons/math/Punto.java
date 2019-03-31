@@ -1,5 +1,10 @@
 package es.lanyu.commons.math;
 
+/**Implementacion basice de {@link Vector2d}.
+ * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
+ * @version 1.0
+ * @since 1.0
+ */
 public class Punto implements Vector2d {
 	float x, y;
 	

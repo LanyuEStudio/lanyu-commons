@@ -18,24 +18,39 @@ public class GestorIdentificables {
 	@SuppressWarnings("rawtypes")
 	private Map<Class, Map> mapaIdentificables = new HashMap<>();
 
+	/**Devuelve el {@code Map<K, T>} que administra los {@link Identificable}s de la clase {@code T}
+	 * @param <K> Tipo de la clave del {@code Identificable}
+	 * @param <T> Tipo del recurso que corresponde al mapa que se quiere recuperar
+	 * @param clase Tipo del recurso. Puede devolver un subtipo (depende de como se cargue)
+	 * @return {@code Map<K, T>} que corresponda
+	 */
 	@SuppressWarnings("unchecked")
 	protected <K extends Comparable<K>, T extends Identificable<K>> Map<K, T> getMapaParaClase(Class<T> clase) {
-		return getMapaIdentificables().get(clase);
+		return getMapaDeMapasIdentificables().get(clase);
 	}
 	
+	/**Agrega un {@link Identificable} como recurso para administrar del tipo {@code T}. Si no existe se crea.
+	 * @param <K> Tipo de la clave del {@code Identificable}
+	 * @param <T> Tipo del recurso que corresponde al mapa que se quiere usar
+	 * @param clase Tipo del recurso para administrar
+	 * @param identificable {@code Identificable} para guardar. Puede ser un subtipo
+	 */
 	public <K extends Comparable<K>, T extends Identificable<K>> void addIdentificable(Class<T> clase, T identificable){
 		Map<K, T> mapa = getMapaParaClase(clase);
 		// Si no existe el mapa para esta clase lo creo y lo controlo
 		if (mapa == null) {
 			mapa = new HashMap<>();
-			getMapaIdentificables().put(clase, mapa);
+			getMapaDeMapasIdentificables().put(clase, mapa);
 		}
 		
 		mapa.put(identificable.getIdentificador(), identificable);
 	}
 	
+	/**{@code Map<Class, Map>} que contiene todos los mapas de {@code Identificables} por clase de recursos.
+	 * @return Mapa de mapas de Identificables
+	 */
 	@SuppressWarnings("rawtypes")
-	protected Map<Class, Map> getMapaIdentificables() {
+	protected Map<Class, Map> getMapaDeMapasIdentificables() {
 		return mapaIdentificables;
 	}
 

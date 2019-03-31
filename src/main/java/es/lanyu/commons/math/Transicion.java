@@ -2,6 +2,14 @@ package es.lanyu.commons.math;
 
 import java.util.function.Function;
 
+/**Permite crear una transicion entre dos estados y actualizar su estado en funcion del tiempo
+ * transcurrido. Tambien permite invertir la transicion. Al usar valores {@code float} permite
+ * definir multiples transiciones (puede usarse para movimiento usando transciones para cada coordenada
+ * o mutar de un color a otro creando una transicion para cada componente R, G y B)
+ * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
+ * @version 1.0
+ * @since 1.0
+ */
 public class Transicion {
 	float valorInicial;
 	float valorFinal;

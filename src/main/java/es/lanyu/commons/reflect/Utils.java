@@ -3,9 +3,11 @@ package es.lanyu.commons.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-/**
- * @author isma
- *
+/**Clase de utilidades para facilitar algunas tareas de {@code java.lang.reflect}
+ * y {@code java.lang.annotation}
+ * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
+ * @version 1.0
+ * @since 1.0
  */
 public class Utils {
 

@@ -14,8 +14,14 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)//Siendo anotacion de tipo la busqueda es mas rapida y no se puede repetir
 public @interface Identificador {
+	
+	/**El valor por defecto si no se especifica lo contrario es {@code "id"}.
+	 */
 	static final String VALOR_POR_DEFECTO = "id"; 
 	
+	/**Nombre del campo que identifica al {@link Identificable}
+	 * @return Valor del {@code Identificador}
+	 */
 	String value() default VALOR_POR_DEFECTO;
 
 }

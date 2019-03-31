@@ -1,6 +1,11 @@
 package es.lanyu.commons.tiempo;
 import java.util.Date;
 
+/**Implementacion basica de {@link Datable}
+ * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
+ * @version 1.0
+ * @since 1.0
+ */
 public abstract class DatableImpl implements Datable {
 	protected transient Date fecha;
 	protected Long timeStamp;

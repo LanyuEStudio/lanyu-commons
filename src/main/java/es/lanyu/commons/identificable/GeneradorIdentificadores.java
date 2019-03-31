@@ -4,9 +4,13 @@ package es.lanyu.commons.identificable;
  * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
  * @version 1.0
  * @since 1.0
+ * @param <K> Tipo del identificador a generar
  */
 public interface GeneradorIdentificadores<K> {
 
-	K generarID();
+	/**Genera un identificador del tipo {@code K} 
+	 * @return Identificador de tipo {@code K}
+	 */
+	K generarId();
 
 }

@@ -1,5 +1,11 @@
 package es.lanyu.commons.math;
 
+/**Extiende la interfaz {@link Vector2d} para añadir la coordenada Z para un entorno de tres dimensiones.
+ * Contiene metodos para realizar operaciones de suma y escalado de vectores.
+ * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
+ * @version 1.0
+ * @since 1.0
+ */
 public interface Vector3d extends Vector2d {
 
 	float getZ();

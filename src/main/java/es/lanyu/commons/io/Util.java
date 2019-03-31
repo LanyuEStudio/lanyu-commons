@@ -15,6 +15,11 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
+/**Clase de utilidades para trabajar con operaciones sobre ficheros
+ * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
+ * @version 1.0
+ * @since 1.0
+ */
 public class Util {
 
 	/**Vuelca una cadena en un fichero con la codificacion marcada
@@ -121,9 +126,16 @@ public class Util {
 		return lineas;
 	}
 	
+	/**Devuelve un {@code File[]} con los archivos en la carpeta {@code rutaDirectorio} con la {@code extension}
+	 * solicitada.
+	 * @param rutaDirectorio Ruta de la carpeta donde buscar
+	 * @param extension Extension de los archivos devueltos (por ejemplo {@code .png})
+	 * @return Array de {@code File} de los archivos que cumplen con la extension en la carpeta
+	 * @throws Exception Se produce si la ruta no pertenece a un directorio valido
+	 */
 	public static File[] archivosConExtension (String rutaDirectorio, String extension) throws Exception {
 		if (rutaDirectorio != null){
-			File[] archivos = null;
+			File[] archivos;
 			File dir = new File(rutaDirectorio);
 			if(dir.isDirectory()){
 				archivos = dir.listFiles(new FilenameFilter() {
@@ -144,6 +156,10 @@ public class Util {
 		}
 	}
 	
+	/**Devuelve el directorio que corresponde a la ubicacion de {@code clase}
+	 * @param clase para la que se quiere conocer su ruta
+	 * @return {@code File} al directorio que contiene a {@code clase}
+	 */
 	public static File getDirectorioDeClase (Class<?> clase) {
 		File directorio = null;
 		String Recurso = clase.getSimpleName() + ".class";
