@@ -2,10 +2,14 @@ package es.lanyu.commons.io;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URL;
@@ -20,23 +24,31 @@ import java.util.stream.Stream;
  * @version 1.0
  * @since 1.0
  */
-public class Util {
+public class IoUtils {
 
+	public static InputStream crearInputStream(String ruta) throws FileNotFoundException {
+		return new FileInputStream(ruta);
+	}
+	
+	public static OutputStream crearOutputStream(String ruta) throws FileNotFoundException {
+		return new FileOutputStream(ruta);
+	}
+	
 	/**Vuelca una cadena en un fichero con la codificacion marcada
 	 * @param informe Cadena a escribir
 	 * @param fichero Ruta del fichero
 	 * @param charSet Codificacion a usar
 	 * @throws IOException Produced by failed or interrupted I/O operations
-	 * @see Util#guardarInformeEnFichero(String texto, Writer escritor)
+	 * @see IoUtils#guardarInformeEnFichero(String texto, Writer escritor)
 	 */
-	public static void guardarInformeEnFichero(String informe, String fichero, String charSet) throws IOException{
-		guardarInformeEnFichero(informe, new OutputStreamWriter(new FileOutputStream(fichero), charSet));
+	public static void guardarInformeEnFichero(String informe, String fichero, String charSet) throws IOException {
+		guardarInformeEnFichero(informe, new OutputStreamWriter(crearOutputStream(fichero), charSet));
 	}
 	/**Vuelca una cadena en un fichero con la codificacion UTF-8
 	 * @param informe Cadena a escribir
 	 * @param fichero Ruta del fichero
 	 * @throws IOException Produced by failed or interrupted I/O operations
-	 * @see Util#guardarInformeEnFichero(String, String, String)
+	 * @see IoUtils#guardarInformeEnFichero(String, String, String)
 	 */
 	public static void guardarInformeEnFichero(String informe, String fichero) throws IOException{
 		guardarInformeEnFichero(informe, fichero, "UTF-8");
@@ -45,7 +57,7 @@ public class Util {
 	 * @param informe Cadena a escribir
 	 * @param fichero File donde escribir la cadena
 	 * @throws IOException Produced by failed or interrupted I/O operations
-	 * @see Util#guardarInformeEnFichero(String texto, Writer escritor)
+	 * @see IoUtils#guardarInformeEnFichero(String texto, Writer escritor)
 	 */
 	public static void guardarInformeEnFichero(String informe, File fichero) throws IOException{
 		guardarInformeEnFichero(informe, new FileWriter(fichero));
@@ -58,7 +70,7 @@ public class Util {
 	 * @throws IOException Produced by failed or interrupted I/O operations
 	 */
 	private static void guardarInformeEnFichero(String texto, Writer escritor) throws IOException{
-		BufferedWriter bWriter = new BufferedWriter(escritor);
+		Writer bWriter = new BufferedWriter(escritor);
 		bWriter.write(texto);
 //		bWriter.flush();
 		bWriter.close();

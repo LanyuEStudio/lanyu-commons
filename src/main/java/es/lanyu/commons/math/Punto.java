@@ -8,6 +8,8 @@ package es.lanyu.commons.math;
 public class Punto implements Vector2d {
 	float x, y;
 	
+	public Punto() {}
+	
 	protected Punto(Vector2d vector) {
 		this(vector.getX(), vector.getY());
 	}

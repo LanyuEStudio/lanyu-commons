@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
  * @version 1.0
  * @since 1.0
  */
-public class Utils {
+public class ReflectUtils {
 
 	/**Devuelve el Field con el nombreCampo pasado (declarado o heredadao)
 	 * y la accesibilidad que tenga definida.
@@ -64,4 +64,13 @@ public class Utils {
 		return anotacion;
 	}
 	
+	/**Devuelve una clase {@code Class<T>} desde un array.
+	 * @param array del tipo deseado
+	 * @param <T> tipo de los elementos dentro del array
+	 * @return {@code Class<T>}
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> Class<T> getClaseArray(T[] array) {
+		return (Class<T>) array.getClass().getComponentType();
+	}
 }

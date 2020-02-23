@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
+import es.lanyu.commons.reflect.ReflectUtils;
+
 /**Esta interfaz permite identificar un objeto por su identificador de tipo K 
  * y comparar entre dos de ellos pues debe implementar la interfaz {@code Comparable<Identificable<K>>}.
  * Requiere Java 8
@@ -34,12 +36,12 @@ public interface Identificable<K extends Comparable<K>> extends Comparable<Ident
 	@SuppressWarnings("unchecked")
 	default K getIdentificador(){
 		K id = null;
-		Identificador iden = es.lanyu.commons.reflect.Utils.buscarAnotacionEnClase(Identificador.class, getClass());
+		Identificador iden = ReflectUtils.buscarAnotacionEnClase(Identificador.class, getClass());
 		String campoId = "id";
 		if(iden != null)
 			campoId = iden.value();
 		try {
-			Field campo = es.lanyu.commons.reflect.Utils.getCampo(getClass(), campoId, true);
+			Field campo = ReflectUtils.getCampo(getClass(), campoId, true);
 			id = (K)campo.get(this);
 		} catch (Exception e) {
 			try {
@@ -96,9 +98,9 @@ public interface Identificable<K extends Comparable<K>> extends Comparable<Ident
 	static <K extends Comparable<K>, T extends Identificable<K>>
 		T getIdentificablePorId(K id, Collection<T> identificables) {
 		return identificables.stream()
-									.filter(i -> i.getIdentificador().equals(id))
-									.findAny()
-									.orElse(null);
+							.filter(i -> i.getIdentificador().equals(id))
+							.findAny()
+							.orElse(null);
 	}
 	
 	@Override
