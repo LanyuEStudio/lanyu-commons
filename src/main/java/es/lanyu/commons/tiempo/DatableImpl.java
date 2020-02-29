@@ -1,4 +1,6 @@
 package es.lanyu.commons.tiempo;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAmount;
 import java.util.Date;
 
 /**Implementacion basica de {@link Datable}
@@ -6,29 +8,55 @@ import java.util.Date;
  * @version 1.0
  * @since 1.0
  */
-public abstract class DatableImpl implements Datable {
-	protected transient Date fecha;
-	protected Long timeStamp;
+public abstract class DatableImpl<T extends Temporal & Comparable> implements Datable<T> {
+    protected T temporal;
 	
 	@Override
-	public Date getFecha() {
-		if(fecha == null && getTimeStamp() != null)
-			fecha = Datable.super.getFecha();
-		return fecha;
+    public T getTemporal() {
+        return temporal;
+    }
+	
+	/**Establece el temporal tal cual como el nuevo valor
+	 * @param temporal con el valor a establecer
+	 */
+	public void setTemporal(T temporal) {
+        this.temporal = temporal;
+    }
+	
+	/**@deprecated se recomienda usar {@link #setTemporal(Temporal) setTemporal(T)}
+	 * @param fecha para establecer con {@link #setTemporal(Temporal) setTemporal(T)}
+	 */
+	public abstract void setFecha(Date fecha);
+	
+	/**@deprecated se recomienda usar {@link #setTemporal(Temporal) setTemporal(T)}
+	 * @param timestamp para establecer con {@link #setTemporal(Temporal) setTemporal(T)}
+	 */
+	public abstract void setTimestamp(Long timestamp);
+	
+	public DatableImpl(T temporal) {
+		super();
+	    setTemporal(temporal);
+    }
+	
+	@Override
+    @SuppressWarnings("unchecked")
+	public T addTiempo(TemporalAmount tiempo) {
+		T nuevoTemporal = (T) getTemporal().plus(tiempo);
+		setTemporal(nuevoTemporal);
+		return nuevoTemporal;
 	}
 	
 	@Override
-	public Long getTimeStamp() {
-		return timeStamp;
+    @SuppressWarnings("unchecked")
+	public T restarTiempo(TemporalAmount tiempo) {
+		T nuevoTemporal = (T) getTemporal().minus(tiempo);
+		setTemporal(nuevoTemporal);
+		return nuevoTemporal;
 	}
 	
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-		setTimeStamp((fecha != null)?fecha.getTime():null);
-	}
-	
-	public void setTimeStamp(Long timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-	
+    @Override
+    public String toString() {
+        return getTemporal().toString();
+    }
+    
 }
