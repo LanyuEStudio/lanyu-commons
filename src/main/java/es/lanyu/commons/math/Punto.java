@@ -18,6 +18,11 @@ public class Punto implements Vector2d {
 		setX(x);
 		setY(y);
 	}
+	
+	public Punto(Float x, Float y) {
+		setX(x);
+		setY(y);
+	}
 
 	public float getX() { return x; }
 	

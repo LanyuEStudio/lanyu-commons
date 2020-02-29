@@ -48,9 +48,9 @@ public class MathUtils {
 		int[][] coorCrudas = generarPuntosEnArcoCircularCrudos(xCentro, yCentro, radio, numeroPuntos,
 				inclinacionInicial, anguloArco, sentidoDelReloj);
 		try {
-			Constructor<T> constructor = tipo.getConstructor(Integer.class, Integer.class);
+			Constructor<T> constructor = tipo.getConstructor(Float.class, Float.class);
 			for(int i = 0; i < coorCrudas.length; i++){
-				coordenadas.add(constructor.newInstance(coorCrudas[i][0], coorCrudas[i][1]));
+				coordenadas.add(constructor.newInstance(coorCrudas[i][0]*1f, coorCrudas[i][1]*1f));
 			}
 		} catch (NoSuchMethodException | SecurityException | InstantiationException
 				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
