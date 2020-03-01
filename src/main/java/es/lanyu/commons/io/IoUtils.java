@@ -1,5 +1,6 @@
 package es.lanyu.commons.io;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +10,7 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -17,7 +19,12 @@ import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
+
+import es.lanyu.commons.identificable.GestorIdentificables;
+import es.lanyu.commons.identificable.Identificable;
 
 /**Clase de utilidades para trabajar con operaciones sobre ficheros
  * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
@@ -75,6 +82,27 @@ public class IoUtils {
 //		bWriter.flush();
 		bWriter.close();
 	}
+	
+	/**Devuelve el contenido del archivo en la ruta pasada como un {@code String}
+	 * @param rutaArchivo al {@code File} conteniendo el {@code String}
+	 * @return {@code String} leido
+	 */
+	public static String leerArchivoComoString(String rutaArchivo) {
+		StringBuilder sb = new StringBuilder();
+		try (BufferedReader buffer = new BufferedReader(
+				new InputStreamReader(new FileInputStream(rutaArchivo), "UTF-8"))) {
+			String linea;
+			while((linea = buffer.readLine()) != null) {
+				sb.append(linea);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return sb.toString();
+	}
+    
 
 	//TODO Escribir cadena al final del archivo
 	public static void agregarTextoEnFinalArchivo (String texto, Writer escritor){
@@ -200,4 +228,75 @@ public class IoUtils {
          
 	     return directorio;
 	}
+	
+
+	/**Carga los recursos de tipo {@link Identificable} almacenados
+	 * en cada fila del fichero {@code rutaArchivo} en formato .json
+	 * y los almacena en el {@code gestor} como un recurso del tipo {@code claseMapa}.
+	 * Puede especializarse el recurso a guardar con {@code claseEspecializacion}
+	 * si esta serializado un subtipo de {@code claseMapa}
+	 * @param <K> Tipo del identificador del {@code Identificable}
+	 * @param <T> Tipo de la {@code claseMapa}
+	 * @param <S> Tipo de la especializacion. Puede ser el igual a {@code T}
+	 * @param deserializador deserializador de tipo {@link DeserializadorArchivo} que implementa la lectura y escritura en formato json
+	 * @param rutaArchivo ruta al archivo .json
+	 * @param claseMapa Clase que sirve para mapear el recurso (normalmente la mas generica)
+	 * @param claseEspecializacion Clase subtipo de claseMapa para gestionar recursos mas especializados
+	 * @param leerLineaPorLinea {@code true} si el archivo trae un objeto aplanado en cada linea
+	 * @param gestor Gestor que administrara los recursos a cargar
+	 */
+	public static <K extends Comparable<K>, T extends Identificable<K>, S extends T> void cargarIdentificables(
+												Deserializador deserializador,
+												String rutaArchivo,
+												Class<T> claseMapa,
+												Class<S> claseEspecializacion,
+												GestorIdentificables gestor,
+												boolean leerLineaPorLinea) {
+
+		if (leerLineaPorLinea) {
+		    String linea = null;
+			try (BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream(rutaArchivo), "UTF-8"))){
+				while((linea = buffer.readLine()) != null){
+					try {
+					    T objeto = deserializador.deserializarJson(claseEspecializacion, linea);
+					    gestor.addIdentificable(claseMapa, objeto);
+					} catch (Exception e) {
+						Logger.getLogger(IoUtils.class.getName()).log(
+								Level.WARNING, "Error parseando " + linea + ": Se omite");
+					}
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			deserializador.deserializarJson(claseEspecializacion, leerArchivoComoString(rutaArchivo));
+		}
+	}
+	
+	/**Carga los recursos de tipo {@link Identificable} almacenados
+	 * en cada fila del fichero {@code rutaArchivo} en formato .json
+	 * y los almacena en el {@code gestor} como un recurso del tipo {@code claseMapa}.
+	 * Puede especializarse el recurso a guardar con {@code claseEspecializacion}
+	 * si esta serializado un subtipo de {@code claseMapa}
+	 * @param <K> Tipo del identificador del {@code Identificable}
+	 * @param <T> Tipo de la {@code claseMapa}
+	 * @param <S> Tipo de la especializacion. Puede ser el igual a {@code T}
+	 * @param deserializador deserializador de tipo {@link DeserializadorArchivo} que implementa la lectura y escritura en formato json
+	 * @param rutaArchivo ruta al archivo .json
+	 * @param claseMapa Clase que sirve para mapear el recurso (normalmente la mas generica)
+	 * @param claseEspecializacion Clase subtipo de claseMapa para gestionar recursos mas especializados
+	 * @param gestor Gestor que administrara los recursos a cargar
+	 */
+	public static <K extends Comparable<K>, T extends Identificable<K>, S extends T> void cargarIdentificables(
+												DeserializadorArchivo deserializador,
+												String rutaArchivo,
+												Class<T> claseMapa,
+												Class<S> claseEspecializacion,
+												GestorIdentificables gestor) {
+		cargarIdentificables(deserializador, rutaArchivo, claseMapa, claseEspecializacion, gestor, false);
+	}
+	
 }

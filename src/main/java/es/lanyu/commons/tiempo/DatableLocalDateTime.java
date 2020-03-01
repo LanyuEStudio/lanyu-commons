@@ -14,7 +14,7 @@ public class DatableLocalDateTime extends DatableImpl<LocalDateTime> {
     
     @Override
     public void setFecha(Date fecha) {
-        setTemporal(fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        setTemporal(fecha != null ? fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime() : null);
     }
     
     @Override
@@ -24,7 +24,7 @@ public class DatableLocalDateTime extends DatableImpl<LocalDateTime> {
 
     @Override
     public void setTimestamp(Long timestamp) {
-        setTemporal(Instant.ofEpochMilli(timestamp).atZone(ZoneId.systemDefault()).toLocalDateTime());
+        setTemporal(timestamp != null ? Instant.ofEpochMilli(timestamp).atZone(ZoneId.systemDefault()).toLocalDateTime() : null);
     }
 
     public DatableLocalDateTime() {

@@ -12,7 +12,7 @@ public class DatableInstant extends DatableImpl<Instant> {
 
     @Override
     public void setFecha(Date fecha) {
-        setTemporal(fecha.toInstant());
+        setTemporal(fecha != null ? fecha.toInstant() : null);
     }
     
     @Override
@@ -22,7 +22,7 @@ public class DatableInstant extends DatableImpl<Instant> {
 
     @Override
     public void setTimestamp(Long timestamp) {
-        setTemporal(Instant.ofEpochMilli(timestamp));
+        setTemporal(timestamp != null ? Instant.ofEpochMilli(timestamp) : null);
     }
 
     public DatableInstant() {
