@@ -10,7 +10,7 @@ import java.util.Objects;
 
 /**Interfaz para objetos que tienen una fecha. Permite la comparacion de estos objetos por fecha
  * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
- * @version 1.0
+ * @version 1.0.3
  * @since 1.0
  * @param <T> tipo especifico de Temporal y Comparable (ejemplo Instant, LocalDate, etc...)
  */
@@ -81,4 +81,7 @@ public interface Datable<T extends Comparable & Temporal> {
 		return getTemporal().compareTo(datable.getTemporal()) > 0;
 	}
 	
+	default Duration duracionHasta(Datable<T> datable) {
+	    return Duration.between(getTemporal(), datable.getTemporal());
+	}
 }
