@@ -102,6 +102,26 @@ public class IoUtils {
 		}
 		return sb.toString();
 	}
+	
+	/**Devuelve el contenido del archivo en la ruta pasada como un {@code String}
+     * @param rutaArchivo al {@code File} conteniendo el {@code String}
+     * @return {@code String} leido
+     */
+    public static String leerArchivoComoStringDesdeClasspath(String rutaArchivo) {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader buffer = new BufferedReader(new InputStreamReader(
+                IoUtils.class.getResourceAsStream("/" + rutaArchivo)))) {
+            String linea;
+            while((linea = buffer.readLine()) != null) {
+                sb.append(linea);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
     
 
 	//TODO Escribir cadena al final del archivo

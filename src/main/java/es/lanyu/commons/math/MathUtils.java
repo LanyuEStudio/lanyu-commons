@@ -2,8 +2,11 @@ package es.lanyu.commons.math;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -17,6 +20,8 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class MathUtils {
 
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.##", DecimalFormatSymbols.getInstance(Locale.getDefault()));
+    
     /**
      * Devuelve el valor que estara entre {@code min} y {@code max}. Al ser un
      * metodo generico puede compararse cualquier tipo {@link Comparable}
@@ -123,5 +128,9 @@ public class MathUtils {
 
     public static float nextFloat() {
         return ThreadLocalRandom.current().nextFloat();
+    }
+    
+    public static String decimalToString(Number numero) {
+        return DECIMAL_FORMAT.format(numero);
     }
 }

@@ -17,6 +17,8 @@ public class CollectionUtils {
     /**Genera una {@link Collection} (implementacion {@link ArrayList} partiendo de un
      * {@link Iterator}. Los tipos de entrada {@code T} y salida {@code R} pueden ser
      * distintos aplicando la funcion {@code mapeo}
+     * @param <T> tipo de los elementos de {@code iterador}
+     * @param <R> tipo de los elementos de la coleccion resultante
      * @param iterador con los elementos iniciales
      * @param mapeo de un elemento origen a elemento destino: {@code (cliente -> cliente.getNombre()} 
      * @return {@link Collection} con los elementos mapeados reunidos.
@@ -34,6 +36,7 @@ public class CollectionUtils {
     
     /**Utiliza {@link #getElementosDesdeIterator(Iterator, Function)} para reunir
      * en la salida los propios elementos iniciales.
+     * @param <T> tipo de los elementos de {@code iterador} y de la coleccion resultante
      * @param iterador con los elementos iniciales
      * @return {@link Collection} con los elementos iniciales reunidos.
      */

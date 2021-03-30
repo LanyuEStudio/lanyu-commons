@@ -1,8 +1,8 @@
 package es.lanyu.commons.servicios.entidad;
 
-import es.lanyu.commons.identificable.AbstractNombrable;
 import es.lanyu.commons.identificable.GestorIdentificables;
 import es.lanyu.commons.identificable.Identificable;
+import es.lanyu.commons.identificable.Nombrable;
 
 /**Interfaz para cargar gestores tipo {@link GestorIdentificables}.
  * @author <a href="https://github.com/Awes0meM4n">Awes0meM4n</a>
@@ -20,7 +20,7 @@ public interface CargadorIdentificables {
 	 * @param claseEspecializacion Clase subtipo de claseMapa para gestionar recursos mas especializados
 	 * @param gestor Gestor que administrara los recursos a cargar
 	 */
-	<T extends AbstractNombrable, S extends T> void cargarNombrables (
+	<T extends Identificable<String> & Nombrable, S extends T> void cargarNombrables (
 			String rutaArchivo,
 			Class<T> claseMapa,
 			Class<S> claseEspecializacion,
@@ -36,7 +36,7 @@ public interface CargadorIdentificables {
 	 * @param claseEspecializacion Clase subtipo de claseMapa para gestionar recursos mas especializados
 	 * @param servicio {@code ServicioEntidad} que administrara los recursos a cargar
 	 */
-	default <T extends AbstractNombrable, S extends T> void cargarNombrables (
+	default <T extends Identificable<String> & Nombrable, S extends T> void cargarNombrables (
 			String rutaArchivo,
 			Class<T> claseMapa,
 			Class<S> claseEspecializacion,

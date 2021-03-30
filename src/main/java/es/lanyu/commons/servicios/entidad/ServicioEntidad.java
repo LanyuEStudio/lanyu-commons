@@ -99,7 +99,7 @@ public interface ServicioEntidad {
 		return crearGeneradorIdsParaClase(clase, false);
 	}
 	
-	/**Genera un {@link GeneradorIdentificadores<String>} por defecto para la {@code clase} y
+	/**Genera un {@link GeneradorIdentificadores} por defecto para la {@code clase} y
 	 * lo almacena con el resto de generadores o recupera el existente asociado a esa clase en
 	 * funcion de si se quiere uno {@code nuevo} o no.
 	 * @param <T> Tipo de {@code Identificable<String>} que se quiere crear

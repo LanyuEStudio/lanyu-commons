@@ -39,7 +39,7 @@ public class Punto implements Vector2d {
 	
 	@Override
 	public String toString() {
-		return String.format("(X:%.2f Y:%.2f)", getX(), getY());
+	    return "(X:" + MathUtils.decimalToString(getX()) + " Y:" + MathUtils.decimalToString(getY()) + ")";
 	}
 	
 }
