@@ -35,6 +35,10 @@ import es.lanyu.commons.identificable.Identificable;
  */
 public class IoUtils {
 
+    public static File getWorkingDir() {
+        return new File(System.getProperty("user.dir"));
+    }
+    
     public static InputStream crearInputStream(String ruta) throws FileNotFoundException {
         return new FileInputStream(ruta);
     }
@@ -119,7 +123,7 @@ public class IoUtils {
      * @return {@code String} leido
      */
     public static String leerArchivoComoString(String rutaArchivo) {
-        return leerArchivoComoString(rutaArchivo, false);
+        return leerArchivoComoString(rutaArchivo, false, "UTF-8");
     }
 
     /**
@@ -130,13 +134,15 @@ public class IoUtils {
      *            al {@code File} conteniendo el {@code String}
      * @param desdeClasspath
      *            {@code true} si la ruta es relativa al classpath
+     * @param charset
+     *            El charset para leer
      * @return {@code String} leido
      */
-    public static String leerArchivoComoString(String rutaArchivo, boolean desdeClasspath) {
+    public static String leerArchivoComoString(String rutaArchivo, boolean desdeClasspath, String charset) {
         String leido = null;
         try (InputStreamReader input = desdeClasspath
                 ? new InputStreamReader(IoUtils.class.getResourceAsStream("/" + rutaArchivo))
-                : new InputStreamReader(new FileInputStream(rutaArchivo), "UTF-8");
+                : new InputStreamReader(new FileInputStream(rutaArchivo), charset);
                 BufferedReader buffer = new BufferedReader(input);) {
             leido = stringDesdeBuffer(buffer);
         } catch (FileNotFoundException e) {
