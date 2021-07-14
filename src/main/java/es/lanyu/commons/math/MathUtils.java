@@ -133,4 +133,20 @@ public class MathUtils {
     public static String decimalToString(Number numero) {
         return DECIMAL_FORMAT.format(numero);
     }
+    
+    /**
+     * Devuelve las soluciones para una ecuacion de segundo grado con los coeficientes
+     * pasados por parametro: {@code ax^2 + bx + c = 0}.
+     * @param a coeficiente  cuadratico  o  de  segundo  grado
+     * @param b coeficiente lineal o de primer grado
+     * @param c termino independiente
+     * @return array con las dos soluciones si las hay
+     */
+    public static double[] solucionEcuacionSegundoGrado(double a, double b, double c) {
+        double dosA = 2*a;
+        double raiz = Math.sqrt(b*b - (2*dosA*c));
+        
+        return new double[] { (-b + raiz)/dosA, (-b - raiz)/dosA };
+    }
+    
 }

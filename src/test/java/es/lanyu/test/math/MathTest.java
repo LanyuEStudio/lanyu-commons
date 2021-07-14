@@ -2,6 +2,7 @@ package es.lanyu.test.math;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import es.lanyu.commons.math.MathUtils;
@@ -66,4 +67,11 @@ public class MathTest {
         return deltaTotal;
     }
 
+    @Test
+    public void solucionesEcuacionSegundoGrado() {
+        Assert.assertArrayEquals(new double[] { 5.0, 0.0 }, MathUtils.solucionEcuacionSegundoGrado(2, -10, 0), 0.0);
+        Assert.assertArrayEquals(new double[] { 1.0, -3.0 }, MathUtils.solucionEcuacionSegundoGrado(2, 4, -6), 0.0);
+        Assert.assertArrayEquals(new double[] { -1.0, -1.0 }, MathUtils.solucionEcuacionSegundoGrado(1, 2, 1), 0.0);
+        Assert.assertArrayEquals(new double[] { Double.NaN, Double.NaN }, MathUtils.solucionEcuacionSegundoGrado(2, 2, 1), 0.0);
+    }
 }
