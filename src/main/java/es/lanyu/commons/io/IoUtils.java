@@ -392,4 +392,16 @@ public class IoUtils {
         cargarIdentificables(deserializador, rutaArchivo, claseMapa, claseEspecializacion, gestor, false);
     }
 
+    /**
+     * Extrae la cadena de texto que hay despues del ultimo caracter "."
+     * o una cadena vacia si no hay ningun caracter "."
+     * 
+     * @param ruta
+     *            ruta del archivo
+     * @return la extension interpretada o una cadena vacia
+     */
+    public static String getExtension(String ruta) {
+        int indice = ruta.lastIndexOf('.');
+        return (indice == -1) ? "" : ruta.substring(indice + 1);
+    }
 }

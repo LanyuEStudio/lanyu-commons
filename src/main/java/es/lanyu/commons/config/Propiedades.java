@@ -169,7 +169,7 @@ public class Propiedades extends Properties {
 	 */
 	public boolean addPropiedades(Properties propiedadesNuevas) {
 		boolean sobreEscrito = false;
-		for (String k : stringPropertyNames()) {
+		for (String k : propiedadesNuevas.stringPropertyNames()) {
 			sobreEscrito |= actualizarPropiedad(k, propiedadesNuevas.getProperty(k));
 		}
 		

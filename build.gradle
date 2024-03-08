@@ -1,32 +1,55 @@
 plugins {
-    id 'java-library'
-    id 'maven-publish'
+  id 'java-library'
+  id 'maven-publish'
 }
 
-group = 'es.lanyu'
-version = '1.0.4'
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+java {
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+  withJavadocJar()
+  withSourcesJar()
+}
+
+ext {
+  grupo   = 'es.lanyu'
+  nombre  = 'lanyu-commons'
+  version = '1.1.0'
+}
+
+publishing {
+  publications {
+    maven(MavenPublication) {
+      pom {
+        name = nombre
+        description = 'Una libreria de apoyo de Lanyu EStudio'
+        url = 'https://github.com/LanyuEStudio/lanyu-commons'
+        licenses {
+          license {
+            name = 'The 3-Clause BSD License'
+            url = 'https://opensource.org/license/BSD-3-clause'
+          }
+        }
+        developers {
+          developer {
+            id = 'Awes0meM4n'
+            name = 'Awes0meM4n (github)'
+            email = 'info@lanyu.es'
+          }
+        }
+      }
+      groupId    = grupo
+      artifactId = nombre
+      version    = version
+
+      from components.java
+    }
+  }
+}
 
 repositories {
-    jcenter()
+  mavenCentral()
 }
 
 dependencies {
 	testImplementation 'junit:junit:4.12'
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
 }
